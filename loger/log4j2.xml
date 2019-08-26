@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Properties>
+		<!-- 定义日志文件根目录 -->
+		<Property name="logDir" value="./logs" />
+		<!-- 定义日志的通用格式 -->
+		<Property name="genericPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		<!-- 定义日志分卷文件通用文件名形式 (暂时未用到) -->
+		<Property name="genericFilePattern" value="%d{yyyy-MM-dd}-%i" />
+	</Properties>
+	<Appenders>
+		<Console name="Console">
+			<PatternLayout pattern="${genericPattern}" />
+		</Console>
+		
+		<RollingFile name="RollingFile" fileName="${logDir}/app.log" filePattern="${logDir}/app-%d{MM-dd-yyyy}-%i.log">
+			<PatternLayout pattern="${genericPattern}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<SizeBasedTriggeringPolicy size="1 MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+	</Loggers>
+</Configuration>
